@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputEmail = document.querySelector('#email');
     const inputAsunto = document.querySelector('#asunto');
     const inputMensaje = document.querySelector('#mensaje');
+    const formulario = document.querySelector('#formulario');
     
     // Asignar eventos
     inputEmail.addEventListener('blur', validar);
@@ -12,8 +13,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function validar(e) {
-        console.log(e.target.value);
+        if (e.target.value.trim() === '') {
+            mostrarAlerta();
+        } else {
+            console.log('Hay algo');
+        }
     }
 
+    function mostrarAlerta() {
+        // Generar un Alerta en HTML
+        const error = document.createElement('P');
+        error.textContent = 'Hubo un Error';
+        error.classList.add('bg-red-600', 'text-white', 'p-2', 'text-center');
+
+        // Inyectar el error al formulario
+        formulario.appendChild(error);
+    }
 
 });
