@@ -1,9 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
+  const email = {
+    email: '',
+    asunto: '',
+    mensaje: ''
+  }
+
+
+
   // Seleccionar los Elementos de la Interfaz
   const inputEmail = document.querySelector("#email");
   const inputAsunto = document.querySelector("#asunto");
   const inputMensaje = document.querySelector("#mensaje");
-  const formulario = document.querySelector("#formulario");
 
   // Asignar eventos
   inputEmail.addEventListener("blur", validar);
@@ -19,12 +27,20 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    if (e.target.id === 'email' && !validarEmail(e.target.value)) {
-        mostrarAlerta('El Email no es Válido', e.target.parentElement);
-        return;
+    if (e.target.id === "email" && !validarEmail(e.target.value)) {
+      mostrarAlerta("El Email no es Válido", e.target.parentElement);
+      return;
     }
 
     limpiarAlerta(e.target.parentElement);
+    
+    // Asignar los valores
+    email[e.target.name] = e.target.value.trim().toLowerCase(); 
+
+    // Comprobar el objeto de email
+    comprobarEmail();
+
+
   }
 
   function mostrarAlerta(mensaje, referencia) {
@@ -48,10 +64,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function validarEmail(email) {
-    const regex =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    const regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
     const resultado = regex.test(email);
     return resultado;
-
   }
+
+  function comprobarEmail() {
+    
+  }
+
+
+
+
 
 });
