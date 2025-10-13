@@ -56,11 +56,15 @@ year.addEventListener('change', e => {
 // Event Listener para los select de búsqueda
 minimo.addEventListener('change', e => {
     datosBusqueda.minimo = e.target.value;
+
+    filtrarAuto();
 });
 
 // Event Listener para los select de búsqueda
 maximo.addEventListener('change', e => {
     datosBusqueda.maximo = e.target.value;
+
+    filtrarAuto();
 });
 
 // Event Listener para los select de búsqueda
@@ -119,7 +123,7 @@ function llenarSelect() {
 
 // Funcion que filtra en base a la búsqueda
 function filtrarAuto() {
-    const resultado = autos.filter( filtrarMarca ).filter( filtrarYear )
+    const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtrarMinimo ).filter( filtrarMaximo );
 
     //console.log(resultado);
 
@@ -140,6 +144,24 @@ function filtrarYear(auto) {
 
     if (year) {
         return auto.year === year;
+    }
+    return auto;
+}
+
+function filtrarMinimo(auto) {
+    const { minimo } = datosBusqueda;
+
+    if (minimo) {
+        return auto.precio >= minimo;
+    }
+    return auto;
+}
+
+function filtrarMaximo(auto) {
+    const { maximo } = datosBusqueda;
+
+    if (maximo) {
+        return auto.precio <= maximo;
     }
     return auto;
 }
