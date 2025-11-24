@@ -26,6 +26,20 @@ function agregarTweet(e) {
         return; // Evita que se ejecuten más líneas de código
     }
 
+    const tweetObj = {
+        id: Date.now(),
+        tweet          // tweet es igual a tweet: tweet
+    }
+    // Añadir al arreglo de tweets
+    tweets = [...tweets, tweetObj];
+
+    // Una vez agregado creamos HTML
+    crearHTML();
+
+
+    // Reiniciar el formulario
+    formulario.reset();
+
 }
 
 // Mostrar mensaje de error
@@ -42,4 +56,34 @@ function mostrarError(error) {
     setTimeout(() => {
         mensajeError.remove();
     }, 3000);
+}
+
+
+// Muestra un listado de los tweets
+function crearHTML() {
+
+    limpiarHTML();
+
+    if (tweets.length > 0) {
+        tweets.forEach( tweet => {
+            // Crear el HTML
+
+            const li = document.createElement('LI');
+
+            // Añadir el texto
+            li.innerText = tweet.tweet;
+            
+            // insertarlo en HTML
+            listaTweets.appendChild(li);
+
+        });
+    }
+}
+
+
+// Limpiar el HTML
+function limpiarHTML() {
+    while (listaTweets.firstChild) {
+        listaTweets.removeChild(listaTweets.firstChild);
+    }
 }
