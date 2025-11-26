@@ -5,6 +5,54 @@ function Seguro(marca, year, tipo) {
     this.tipo = tipo;
 }
 
+// Realiza la cotización con los datos
+Seguro.prototype.cotizarSeguro = function() {
+    /*
+        1 = Americano 1.15
+        2 = Asiático 1.05
+        3 = Europeo 1.35
+    */
+   let cantidad;
+   const base = 2000;
+
+    switch(this.marca) {
+
+        case '1':
+            cantidad = base * 1.15;
+            break;
+        case '2':
+            cantidad = base * 1.05;
+            break;
+
+        case '3':
+            cantidad = base * 1.35;
+            break;
+
+        default:
+            break;
+    }
+
+    // Leer el año
+    const diferencia = new Date().getFullYear() - this.year;
+
+    // Cada año que la diferencia es mayor, el costo va a reducirse un 3%
+    cantidad -=((diferencia * 3) * cantidad) / 100;
+
+    /*
+        Si el sesguro es básico se multiplica por un 30% más
+        Si el sesguro es completo se multiplica por un 50% más
+    */
+
+        if (this.tipo === 'basico') {
+            cantidad *= 1.30;
+        } else {
+            cantidad *= 1.50;
+        }
+
+        return cantidad;
+
+}
+
 function UI() {}
 
 // Llena las opciones de los años
@@ -78,5 +126,14 @@ function cotizarSeguro(e) {
     } 
 
     ui.mostrarMensaje('Cotizando', 'exito');
+
+    // Instanciar el Seguro
+    const seguro = new Seguro(marca, year, tipo);
+    seguro.cotizarSeguro();
+
+
+
+    // Utilizar el prototype que va a cotizar
+
 
 }
