@@ -20,6 +20,11 @@ class Presupuesto {
         this.gastos = [];
     }
 
+    nuevoGasto(gasto) {
+        this.gastos = [...this.gastos, gasto];
+
+    }
+
 }
 
 
@@ -92,7 +97,7 @@ function agregarGasto(e) {
 
     // Leer los datos del formulario
     const nombre = document.querySelector('#gasto').value;
-    const cantidad = document.querySelector('#cantidad').value;
+    const cantidad = Number(document.querySelector('#cantidad').value);
 
     // Validar
     if (nombre === '' || cantidad === '') {
@@ -105,5 +110,15 @@ function agregarGasto(e) {
         return;
     }
 
-    console.log('Agregando Gastos');
+    // Generar un objeto con el gasto
+    const gasto = {nombre, cantidad, id: Date.now()};
+
+    // Añade un nuevo gasto
+    presupuesto.nuevoGasto( gasto );
+
+    ui.imprimirAlerta('Gasto Agregado Correctamente');
+
+    // Reinicia el formulario
+    formulario.reset()
+
 }
