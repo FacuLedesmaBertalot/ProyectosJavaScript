@@ -34,10 +34,9 @@ function datosCita(e) {
 
 function submitCita(e) {
     e.preventDefault();
-    const { paciente, propietario, email, fecha, sinomas } = citaObj;
 
-    if (paciente.trim() === '' || propietario.trim() === '' || email.trim() === '' ||propietario.trim() === '' ||) {
-
+    if ( Object.values(citaObj).some(valor => valor.trim() === '')) {
+        
         return;
     }
 }
