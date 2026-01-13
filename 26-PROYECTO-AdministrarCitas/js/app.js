@@ -18,12 +18,15 @@ const citaObj = {
 
 
 // Eventos
-pacienteInput.addEventListener('change', (e) => {
+pacienteInput.addEventListener('change', datosCita);
+propietarioInput.addEventListener('change', datosCita);
+emailInput.addEventListener('change', datosCita);
+fechaInput.addEventListener('change', datosCita);
+sintomasInput.addEventListener('change', datosCita);
+
+
+
+
+function datosCita(e) {
     citaObj[e.target.name] = e.target.value;
-
-})
-
-propietarioInput.addEventListener('change', (e) => {
-    citaObj[e.target.name] = e.target.value;
-
-})
+}
