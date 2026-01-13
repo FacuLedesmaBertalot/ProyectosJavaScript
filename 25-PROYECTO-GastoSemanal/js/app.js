@@ -32,8 +32,8 @@ class Presupuesto {
     }
 
     eliminarGasto(id) {
-        this.gastos = this.gastos.filter( gasto => gasto.id !== id);
-
+        this.gastos = this.gastos.filter( gasto => gasto.id !== id );
+        this.calcularRestante();
     }
 
 }
@@ -127,6 +127,9 @@ class UI {
         } else if ((presupuesto / 2) > restante ) {
             restanteDiv.classList.remove('alert-success');
             restanteDiv.classList.add('alert-warning');
+        } else {
+            restanteDiv.classList.remove('alert-danger', 'alert-warning');
+            restanteDiv.classList.add('alert-success');
         }
 
 
@@ -140,11 +143,9 @@ class UI {
 
 }
 
-
 // Instanciar 
 const ui = new UI();
 let presupuesto;
-
 
 
 // Funciones
@@ -210,6 +211,8 @@ function eliminarGasto(id) {
     presupuesto.eliminarGasto(id);
 
     // Elimina los gastos del HTML
-    const { gastos } = presupuesto;
+    const { gastos, restante } = presupuesto;
     ui.mostrarGastos(gastos);
+    ui.actualizarRestante(restante);
+    ui.comprobarPresupuesto(presupuesto);
 }
