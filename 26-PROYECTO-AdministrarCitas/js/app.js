@@ -20,11 +20,11 @@ formulario.addEventListener("submit", submitCita);
 
 // Objeto de Cita
 const citaObj = {
-  paciente: '',
-  propietario: '',
-  email: '',
-  fecha: '',
-  sintomas: '',
+  paciente: "",
+  propietario: "",
+  email: "",
+  fecha: "",
+  sintomas: "",
 };
 
 class Notificacion {
@@ -57,7 +57,7 @@ class Notificacion {
     // Si es de tipo error, agrega una clase
     this.tipo === "error"
       ? alerta.classList.add("bg-red-500")
-      : alert.classList.add("bg-green-500");
+      : alerta.classList.add("bg-green-500");
 
     // Mensaje de Error
     alerta.textContent = this.texto;
@@ -168,26 +168,29 @@ function submitCita(e) {
   e.preventDefault();
 
   if (Object.values(citaObj).some((valor) => valor.trim() === "")) {
-    Notificacion({
+    new Notificacion({
       texto: "Todos los Campos son Obligatorios",
       tipo: "error",
     });
     return;
   }
 
-  citas.agregar(citaObj);
+  citas.agregar({...citaObj});
   formulario.reset();
   reiniciarObjetoCita();
+  new Notificacion({
+    texto: "Paciente Registrado",
+    tipo: "exito",
+  });
 }
 
-
 function reiniciarObjetoCita() {
-    // Reiniciar el Objeto
-    Object.assign(citaObj, {
-        paciente: '',
-        propietario: '',
-        email: '',
-        fecha: '',
-        sintomas: '',
-    })
+  // Reiniciar el Objeto
+  Object.assign(citaObj, {
+    paciente: "",
+    propietario: "",
+    email: "",
+    fecha: "",
+    sintomas: "",
+  });
 }
