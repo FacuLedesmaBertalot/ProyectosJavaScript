@@ -36,7 +36,35 @@ function submitCita(e) {
     e.preventDefault();
 
     if ( Object.values(citaObj).some(valor => valor.trim() === '')) {
-        
+        const notification = new Notificacion({
+            texto: 'Todos los Campos son Obligatorios',
+            tipo: 'error'
+        });
+        notification.mostrar();
         return;
+    }
+}
+
+class Notificacion {
+
+    constructor({texto, tipo}) {
+        this.texto = texto;
+        this.tipo = tipo;
+    }
+
+    mostrar() {
+        // Crear la Notificación
+        const alerta = document.createElement('DIV');
+        alerta.classList.add('text-center', 'w-full', 'p-3', 'text-white', 'my-5', 'alert', 'uppercase', 'font-bold', 'text-sm');
+
+        // Si es de tipo error, agrega una clase
+        this.tipo = 'error' ? alerta.classList.add('bg-red-500') : alert.classList.add('bg-green-500');
+
+
+        // Mensaje de Error
+        alerta.textContent = this.texto;
+
+        // Insertar en el DOM
+        formulario.parentElement.insertBefore(alerta, formulario)
     }
 }
