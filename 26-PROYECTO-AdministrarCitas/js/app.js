@@ -27,23 +27,6 @@ const citaObj = {
     sintomas: ''
 }
 
-
-function datosCita(e) {
-    citaObj[e.target.name] = e.target.value;
-}
-
-function submitCita(e) {
-    e.preventDefault();
-
-    if ( Object.values(citaObj).some(valor => valor.trim() === '')) {
-        Notificacion({
-            texto: 'Todos los Campos son Obligatorios',
-            tipo: 'error'
-        })
-        return;
-    }
-}
-
 class Notificacion {
 
     constructor({texto, tipo}) {
@@ -78,3 +61,35 @@ class Notificacion {
         }, 3000);
     }
 }
+
+class AdminCitas {
+    constructor() {
+        this.citas = [];
+    }
+
+    agregar(cita) {
+        this.citas = [...this.citas, cita];
+    }
+}
+
+
+function datosCita(e) {
+    citaObj[e.target.name] = e.target.value;
+}
+
+const citas = new AdminCitas();
+
+function submitCita(e) {
+    e.preventDefault();
+
+    if ( Object.values(citaObj).some(valor => valor.trim() === '')) {
+        Notificacion({
+            texto: 'Todos los Campos son Obligatorios',
+            tipo: 'error'
+        })
+        return;
+    }
+
+    citas.agregar(citaObj);
+}
+
