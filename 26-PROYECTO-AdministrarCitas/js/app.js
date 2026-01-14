@@ -20,11 +20,11 @@ formulario.addEventListener("submit", submitCita);
 
 // Objeto de Cita
 const citaObj = {
-  paciente: "",
-  propietario: "",
-  email: "",
-  fecha: "",
-  sintomas: "",
+  paciente: '',
+  propietario: '',
+  email: '',
+  fecha: '',
+  sintomas: '',
 };
 
 class Notificacion {
@@ -176,4 +176,18 @@ function submitCita(e) {
   }
 
   citas.agregar(citaObj);
+  formulario.reset();
+  reiniciarObjetoCita();
+}
+
+
+function reiniciarObjetoCita() {
+    // Reiniciar el Objeto
+    Object.assign(citaObj, {
+        paciente: '',
+        propietario: '',
+        email: '',
+        fecha: '',
+        sintomas: '',
+    })
 }
