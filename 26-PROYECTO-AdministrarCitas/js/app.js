@@ -1,122 +1,179 @@
 // Selectores
-const pacienteInput = document.querySelector('#paciente');
-const propietarioInput = document.querySelector('#propietario');
-const emailInput = document.querySelector('#email');
-const fechaInput = document.querySelector('#fecha');
-const sintomasInput = document.querySelector('#sintomas');
+const pacienteInput = document.querySelector("#paciente");
+const propietarioInput = document.querySelector("#propietario");
+const emailInput = document.querySelector("#email");
+const fechaInput = document.querySelector("#fecha");
+const sintomasInput = document.querySelector("#sintomas");
 
-const formulario = document.querySelector('#formulario-cita');
+const formulario = document.querySelector("#formulario-cita");
 
-const contenedorCitas = document.querySelector('#citas');
-
+const contenedorCitas = document.querySelector("#citas");
 
 // Eventos
-pacienteInput.addEventListener('change', datosCita);
-propietarioInput.addEventListener('change', datosCita);
-emailInput.addEventListener('change', datosCita);
-fechaInput.addEventListener('change', datosCita);
-sintomasInput.addEventListener('change', datosCita);
+pacienteInput.addEventListener("change", datosCita);
+propietarioInput.addEventListener("change", datosCita);
+emailInput.addEventListener("change", datosCita);
+fechaInput.addEventListener("change", datosCita);
+sintomasInput.addEventListener("change", datosCita);
 
-formulario.addEventListener('submit', submitCita);
-
+formulario.addEventListener("submit", submitCita);
 
 // Objeto de Cita
 const citaObj = {
-    paciente: '',
-    propietario: '',
-    email: '',
-    fecha: '',
-    sintomas: ''
-}
+  paciente: "",
+  propietario: "",
+  email: "",
+  fecha: "",
+  sintomas: "",
+};
 
 class Notificacion {
+  constructor({ texto, tipo }) {
+    this.texto = texto;
+    this.tipo = tipo;
 
-    constructor({texto, tipo}) {
-        this.texto = texto;
-        this.tipo = tipo;
+    this.mostrar();
+  }
 
-        this.mostrar();
-    }
+  mostrar() {
+    // Crear la Notificación
+    const alerta = document.createElement("DIV");
+    alerta.classList.add(
+      "text-center",
+      "w-full",
+      "p-3",
+      "text-white",
+      "my-5",
+      "alert",
+      "uppercase",
+      "font-bold",
+      "text-sm"
+    );
 
-    mostrar() {
-        // Crear la Notificación
-        const alerta = document.createElement('DIV');
-        alerta.classList.add('text-center', 'w-full', 'p-3', 'text-white', 'my-5', 'alert', 'uppercase', 'font-bold', 'text-sm');
+    // Eliminar alertas duplicadas
+    const alertaPrevia = document.querySelector(".alert");
+    alertaPrevia?.remove();
 
-        // Eliminar alertas duplicadas
-        const alertaPrevia = document.querySelector('.alert');
-        alertaPrevia?.remove();
+    // Si es de tipo error, agrega una clase
+    this.tipo === "error"
+      ? alerta.classList.add("bg-red-500")
+      : alert.classList.add("bg-green-500");
 
-        // Si es de tipo error, agrega una clase
-        this.tipo === 'error' ? alerta.classList.add('bg-red-500') : alert.classList.add('bg-green-500');
+    // Mensaje de Error
+    alerta.textContent = this.texto;
 
+    // Insertar en el DOM
+    formulario.parentElement.insertBefore(alerta, formulario);
 
-        // Mensaje de Error
-        alerta.textContent = this.texto;
-
-        // Insertar en el DOM
-        formulario.parentElement.insertBefore(alerta, formulario)
-
-        // Quitar después de 3 segundos
-        setTimeout(() => {
-            alerta.remove();    
-        }, 3000);
-    }
+    // Quitar después de 3 segundos
+    setTimeout(() => {
+      alerta.remove();
+    }, 3000);
+  }
 }
 
 class AdminCitas {
-    constructor() {
-        this.citas = [];
+  constructor() {
+    this.citas = [];
+  }
+
+  agregar(cita) {
+    this.citas = [...this.citas, cita];
+    this.mostrar();
+  }
+
+  mostrar() {
+    // Limpiar el HTML
+    while (contenedorCitas.firstChild) {
+      contenedorCitas.removeChild(contenedorCitas.firstChild);
     }
 
-    agregar(cita) {
-        this.citas = [...this.citas, cita];
-        this.mostrar();
-    }
+    // Generando las Citas
+    this.citas.forEach((cita) => {
+      const divCita = document.createElement("div");
+      divCita.classList.add(
+        "mx-5",
+        "my-10",
+        "bg-white",
+        "shadow-md",
+        "px-5",
+        "py-10",
+        "rounded-xl",
+        "p-3"
+      );
 
-    mostrar() {
-        // Limpiar el HTML
-        while (contenedorCitas.firstChild) {
-            contenedorCitas.removeChild(contenedorCitas.firstChild);
-        }
+      const paciente = document.createElement("p");
+      paciente.classList.add(
+        "font-normal",
+        "mb-3",
+        "text-gray-700",
+        "normal-case"
+      );
+      paciente.innerHTML = `<span class="font-bold uppercase">Paciente: </span> ${cita.paciente}`;
 
-        // Generando las Citas
-        this.citas.forEach( cita => {
-            const divCita = document.createElement('DIV');
-            divCita.classList.add('mx-5', 'my-10', 'bg-white', 'shadow-md', 'px-5', 'py-10', 'rounded-xl');
+      const propietario = document.createElement("p");
+      propietario.classList.add(
+        "font-normal",
+        "mb-3",
+        "text-gray-700",
+        "normal-case"
+      );
+      propietario.innerHTML = `<span class="font-bold uppercase">Propietario: </span> ${cita.propietario}`;
 
-            const paciente = document.createElement('P');
-            paciente.classList.add('font-normal', 'mb-3', 'text-gray-700', 'normal-case');
-            paciente.innerHTML = ` <span class="font-bold uppercase">Paciente: </span> ${cita.paciente}
+      const email = document.createElement("p");
+      email.classList.add(
+        "font-normal",
+        "mb-3",
+        "text-gray-700",
+        "normal-case"
+      );
+      email.innerHTML = `<span class="font-bold uppercase">E-mail: </span> ${cita.email}`;
 
-            `
+      const fecha = document.createElement("p");
+      fecha.classList.add(
+        "font-normal",
+        "mb-3",
+        "text-gray-700",
+        "normal-case"
+      );
+      fecha.innerHTML = `<span class="font-bold uppercase">Fecha: </span> ${cita.fecha}`;
 
-            // Inyectar al HTML
-            divCita.appendChild(paciente);
+      const sintomas = document.createElement("p");
+      sintomas.classList.add(
+        "font-normal",
+        "mb-3",
+        "text-gray-700",
+        "normal-case"
+      );
+      sintomas.innerHTML = `<span class="font-bold uppercase">Síntomas: </span> ${cita.sintomas}`;
 
-            contenedorCitas.appendChild(divCita);
-        })
-    }
+      // Agregar al HTML
+      divCita.appendChild(paciente);
+      divCita.appendChild(propietario);
+      divCita.appendChild(email);
+      divCita.appendChild(fecha);
+      divCita.appendChild(sintomas);
+      contenedorCitas.appendChild(divCita);
+    });
+  }
 }
 
-
 function datosCita(e) {
-    citaObj[e.target.name] = e.target.value;
+  citaObj[e.target.name] = e.target.value;
 }
 
 const citas = new AdminCitas();
 
 function submitCita(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    if ( Object.values(citaObj).some(valor => valor.trim() === '')) {
-        Notificacion({
-            texto: 'Todos los Campos son Obligatorios',
-            tipo: 'error'
-        })
-        return;
-    }
+  if (Object.values(citaObj).some((valor) => valor.trim() === "")) {
+    Notificacion({
+      texto: "Todos los Campos son Obligatorios",
+      tipo: "error",
+    });
+    return;
+  }
 
-    citas.agregar(citaObj);
+  citas.agregar(citaObj);
 }
-
