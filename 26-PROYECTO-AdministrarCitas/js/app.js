@@ -21,6 +21,7 @@ formulario.addEventListener("submit", submitCita);
 
 // Objeto de Cita
 const citaObj = {
+  id: generarId(),
   paciente: "",
   propietario: "",
   email: "",
@@ -233,6 +234,7 @@ function submitCita(e) {
 function reiniciarObjetoCita() {
   // Reiniciar el Objeto
   Object.assign(citaObj, {
+    id: generarId(),
     paciente: "",
     propietario: "",
     email: "",
@@ -241,7 +243,18 @@ function reiniciarObjetoCita() {
   });
 }
 
+function generarId() {
+  return Math.random().toString(36).substring(2) + Date.now();
+}
 
-function cargarEdicion() {
+
+function cargarEdicion(cita) {
+  Object.assign(citaObj, cita);
+
+  pacienteInput.value = cita.paciente;
+  propietarioInput = cita.propietario;
+  emailInput = cita.email;
+  fechaInput = cita.fecha;
+  sintomasInput = cita.sintomas;
 
 }
