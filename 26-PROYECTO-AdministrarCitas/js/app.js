@@ -6,7 +6,6 @@ const fechaInput = document.querySelector("#fecha");
 const sintomasInput = document.querySelector("#sintomas");
 
 const formulario = document.querySelector("#formulario-cita");
-
 const contenedorCitas = document.querySelector("#citas");
 
 
@@ -18,6 +17,8 @@ fechaInput.addEventListener("change", datosCita);
 sintomasInput.addEventListener("change", datosCita);
 
 formulario.addEventListener("submit", submitCita);
+
+let editando = false;
 
 // Objeto de Cita
 const citaObj = {
@@ -222,13 +223,17 @@ function submitCita(e) {
     return;
   }
 
-  citas.agregar({ ...citaObj });
+  if (editando) {
+
+  } else {
+    citas.agregar({ ...citaObj });
+    new Notificacion({
+      texto: "Paciente Registrado",
+      tipo: "exito",
+    });
+  }
   formulario.reset();
   reiniciarObjetoCita();
-  new Notificacion({
-    texto: "Paciente Registrado",
-    tipo: "exito",
-  });
 }
 
 function reiniciarObjetoCita() {
@@ -257,4 +262,5 @@ function cargarEdicion(cita) {
   fechaInput = cita.fecha;
   sintomasInput = cita.sintomas;
 
+  editando = true;
 }
