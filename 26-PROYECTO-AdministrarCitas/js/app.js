@@ -6,6 +6,7 @@ const fechaInput = document.querySelector("#fecha");
 const sintomasInput = document.querySelector("#sintomas");
 
 const formulario = document.querySelector("#formulario-cita");
+const formularioInput = document.querySelector('#formulario-cita input[type="submit"]');
 const contenedorCitas = document.querySelector("#citas");
 
 
@@ -82,6 +83,11 @@ class AdminCitas {
 
   agregar(cita) {
     this.citas = [...this.citas, cita];
+    this.mostrar();
+  }
+
+  editar(citaActualizada) {
+    this.citas = this.citas.map( cita => cita.id === citaActualizada.id ? citaActualizada : cita );
     this.mostrar();
   }
 
@@ -218,22 +224,28 @@ function submitCita(e) {
   if (Object.values(citaObj).some((valor) => valor.trim() === "")) {
     new Notificacion({
       texto: "Todos los Campos son Obligatorios",
-      tipo: "error",
+      tipo: "error"
     });
     return;
   }
 
   if (editando) {
-
-  } else {
-    citas.agregar({ ...citaObj });
+    citas.editar( { ...citaObj });
     new Notificacion({
-      texto: "Paciente Registrado",
-      tipo: "exito",
-    });
+      texto: "Guardado Correctamente",
+      tipo: "exito"
+    })
+  } else {
+      citas.agregar({ ...citaObj });
+      new Notificacion({
+        texto: "Paciente Registrado",
+        tipo: "exito"
+    })
   }
   formulario.reset();
   reiniciarObjetoCita();
+  formularioInput.value = 'Registrar Paciente';
+  editando = false;
 }
 
 function reiniciarObjetoCita() {
@@ -244,7 +256,7 @@ function reiniciarObjetoCita() {
     propietario: "",
     email: "",
     fecha: "",
-    sintomas: "",
+    sintomas: ""
   });
 }
 
@@ -257,10 +269,12 @@ function cargarEdicion(cita) {
   Object.assign(citaObj, cita);
 
   pacienteInput.value = cita.paciente;
-  propietarioInput = cita.propietario;
-  emailInput = cita.email;
-  fechaInput = cita.fecha;
-  sintomasInput = cita.sintomas;
+  propietarioInput.value = cita.propietario;
+  emailInput.value = cita.email;
+  fechaInput.value = cita.fecha;
+  sintomasInput.value = cita.sintomas;
 
   editando = true;
+
+  formularioInput.value = 'Guardar Cambios';
 }
