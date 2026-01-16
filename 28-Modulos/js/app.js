@@ -1,5 +1,7 @@
-import { nombreCliente, ahorro, mostrarInformacion, tieneSaldo, Cliente } from "./cliente";
+import nuevaFuncion, { nombreCliente, ahorro, mostrarInformacion, tieneSaldo, Cliente } from "./cliente";
 import { Empresa } from './empresa.js';
+
+nuevaFuncion();
 
 console.log(nombreCliente);
 console.log(ahorro);

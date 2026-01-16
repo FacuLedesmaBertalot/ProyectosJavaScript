@@ -11,3 +11,7 @@ export class Empresa extends Cliente {
         return `Cliente: ${this.nombre} - Ahorro: ${this.ahorro} - Categoría: ${this.categoria}.`;
     }
 }
+
+export default function nuevaFuncion() {
+    console.log('Este es el export default');
+}
