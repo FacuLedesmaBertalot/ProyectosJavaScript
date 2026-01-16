@@ -1,3 +1,5 @@
+import Notificacion from "./classes/Notificacion.js";
+
 // Selectores
 const pacienteInput = document.querySelector('#paciente')
 const propietarioInput = document.querySelector('#propietario')
