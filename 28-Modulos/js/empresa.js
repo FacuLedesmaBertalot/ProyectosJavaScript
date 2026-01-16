@@ -6,7 +6,6 @@ export class Empresa extends Cliente {
         this.categoria = categoria;
     }
 
-
     mostrarInformacion() {
         return `Cliente: ${this.nombre} - Ahorro: ${this.ahorro} - Categoría: ${this.categoria}.`;
     }
