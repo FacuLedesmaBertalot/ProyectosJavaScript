@@ -1,4 +1,6 @@
-class AdminCitas {
+import { contenedorCitas } from "../selectores.js";
+
+export default class AdminCitas {
     constructor() {
         this.citas = []
     }
