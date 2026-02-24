@@ -35,6 +35,39 @@
             imprimirAlerta('Todos los Campos son Obligatorios', 'error');
             return;
         }
+
+        // Crear un objeto con la informacion
+
+        const cliente = { 
+            nombre,
+            email,
+            telefono,
+            empresa,
+        }
+        cliente.id = Date.now();
+
+        crearNuevoCliente(cliente);
+    }
+
+
+    function crearNuevoCliente(cliente) {
+        const transaction = DB.transaction(['crm'], 'readwrite');
+
+        const objectStore = transaction.objectStore('crm');
+
+        objectStore.add(cliente);
+
+        transaction.onerror = function() {
+            imprimirAlerta('Hubo un Error', 'error');
+        };
+
+        transaction.oncomplete = function() {
+            imprimirAlerta('El Cliente se Agregó Correctamente');
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        }
     }
 
 
