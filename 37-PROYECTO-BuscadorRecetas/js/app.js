@@ -146,6 +146,9 @@ function iniciarApp() {
         
         // localStorage
         btnFavorito.onclick = function() {
+            if (existeStorage(idMeal)) {
+                return;
+            }
             agregarFavorito({
                 id: idMeal,
                 titulo: strMeal,
@@ -172,6 +175,13 @@ function iniciarApp() {
     function agregarFavorito(receta) {
         const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
         localStorage.setItem('favoritos', JSON.stringify([...favoritos, receta]));
+    }
+
+
+    function existeStorage(id) {
+        const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
+        return favoritos.some(favorito => favorito.id === id);
+
     }
 
 
