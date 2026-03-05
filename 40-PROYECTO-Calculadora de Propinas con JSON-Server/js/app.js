@@ -16,9 +16,22 @@ function guardarCliente() {
     const camposVacios = [ mesa, hora ].some( campo => campo === '' );
 
     if (camposVacios) {
+        // Verificar si ya hay una alerta
+        const existeAlerta = document.querySelector('.invalid-feedback');
 
-    } else {
-        
-    }
+        if (!existeAlerta) {
+            const alerta = document.createElement('DIV');
+            alerta.classList.add('invalid-feedback', 'd-block', 'text-center');
+            alerta.textContent = 'Todos los Campos son Obligatorios';
+            document.querySelector('.modal-body form').appendChild(alerta);
+
+            // Elimina alerta
+            setTimeout(() => {
+                alerta.remove();
+            }, 3000);
+        }
+
+        return;
+    } 
 
 }
