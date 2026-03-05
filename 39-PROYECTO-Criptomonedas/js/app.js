@@ -63,5 +63,19 @@ function submitFormulario(e) {
 
 
 function mostrarAlerta(msg) {
+    const existeError = document.querySelector('.error');
 
+    if (!existeError) {
+        const divMensaje = document.createElement('DIV');
+        divMensaje.classList.add('error');
+
+        // mensaje de error
+        divMensaje.textContent = msg;
+
+        formulario.appendChild(divMensaje);
+
+        setTimeout(() => {
+            divMensaje.remove();
+        }, 3000);
+    }
 }
