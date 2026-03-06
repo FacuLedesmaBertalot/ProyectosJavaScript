@@ -339,6 +339,7 @@ function formularioPropinas() {
     radio10.name = 'propina';
     radio10.value = "10";
     radio10.classList.add('form-check-input');
+    radio10.onclick = calcularPropina;
 
     const radio10Label = document.createElement('LABEL');
     radio10Label.textContent = '10%';
@@ -356,6 +357,7 @@ function formularioPropinas() {
     radio25.name = 'propina';
     radio25.value = "25";
     radio25.classList.add('form-check-input');
+    radio25.onclick = calcularPropina;
 
     const radio25Label = document.createElement('LABEL');
     radio25Label.textContent = '25%';
@@ -373,6 +375,7 @@ function formularioPropinas() {
     radio50.name = 'propina';
     radio50.value = "50";
     radio50.classList.add('form-check-input');
+    radio50.onclick = calcularPropina;
 
     const radio50Label = document.createElement('LABEL');
     radio50Label.textContent = '50%';
@@ -394,4 +397,24 @@ function formularioPropinas() {
     formulario.appendChild(divFormulario);
 
     contenido.appendChild(formulario);
+}
+
+
+function calcularPropina() {
+    let subtotal = 0;
+    const { pedido } = cliente;
+
+    // Calcular el subtotal a pagar
+    pedido.forEach( articulo => {
+        subtotal += articulo.cantidad * articulo.precio;
+    });
+
+    // Seleccionar el radio button con la propina del cliente
+    const propinaSeleccionada = document.querySelector('[name="propina"]:checked').value;
+
+    // Calcular la propina
+    const propina = ((subtotal * parseInt(propinaSeleccionada)) / 100);
+
+    // Calcular el total
+    const total = subtotal + propina;
 }
