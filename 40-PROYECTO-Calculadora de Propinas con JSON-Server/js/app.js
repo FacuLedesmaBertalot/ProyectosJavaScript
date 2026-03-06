@@ -143,5 +143,8 @@ function agregarPlatillo(producto) {
         }
 
     } else {
+        // Eliminar elementos cuando la cantidad es 0
+        const resultado = pedido.filter( articulo => articulo.id !== producto.id );
+        
     }
 }
